@@ -188,7 +188,13 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             flex: 1 1 300px; /* Make images flexible and responsive */
         }
-        .testimonial-image-container img {
+        .testimonial-images-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 24px;
+        }
+        .testimonial-images-container img {
             width: 100%;
             height: auto;
             border-radius: 12px;
@@ -238,7 +244,9 @@
     <!-- 0. Navigation Bar -->
     <header id="navbar" class="navbar">
         <div class="container navbar-content">
-            <a href="#" class="nav-logo">Patinha Saudável</a>
+            <a href="#" class="nav-logo">
+                Patinha Saudável
+            </a>
             <nav class="nav-links">
                 <a href="#o-problema" class="nav-link">O Problema</a>
                 <a href="#a-solucao" class="nav-link">A Solução</a>
@@ -367,7 +375,7 @@
             <div class="testimonials-layout fade-in">
                 <div class="testimonial-images-container" style="display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;">
                     <img src="https://raw.githubusercontent.com/jcfgodinho/patinha-saudavel/8cc4c8cbab2669c6093fe51f29e18d095debcf54/depoimento%201.png" alt="Depoimento de cliente 1" class="testimonial-image" style="max-width: 48%; height: auto; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
-                    <img src="https://raw.githubusercontent.com/jcfgodinho/patinha-saudavel/40e24428cd7b30757c78215f78f66d218a15ee8b/depoimento%202.png" alt="Depoimento de cliente 2" class="testimonial-image" style="max-width: 48%; height: auto; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+                    <img src="https://raw.githubusercontent.com/jcfgodinho/patinha-saudavel/6179db59291cf935ea832def5a4c822dd1f8c0f6/depoimento%203.png" alt="Depoimento de cliente 3" class="testimonial-image" style="max-width: 48%; height: auto; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
                 </div>
             </div>
         </section>
