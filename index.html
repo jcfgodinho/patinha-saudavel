@@ -18,6 +18,7 @@
             --color-bg-white: #ffffff; /* White */
             --color-bg-blue-light: #e6f0ff; /* New light blue background */
             --font-main: 'Poppins', sans-serif;
+            --navbar-height: 80px; /* Default value, will be updated by JS */
         }
 
         body {
@@ -68,20 +69,31 @@
         .hero { 
             position: relative; 
             overflow: hidden; 
-            padding-top: 150px; 
-            padding-bottom: 80px; 
             background: linear-gradient(135deg, rgba(235, 245, 255, 0.8), rgba(255, 255, 255, 0.6));
             background-size: 200% 200%;
             animation: gradient-move 20s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
         }
-        .hero-content { display: flex; flex-direction: column-reverse; align-items: center; gap: 48px; position: relative; z-index: 1; }
+        .hero-content { 
+            display: flex; 
+            flex-direction: column-reverse; 
+            align-items: center; 
+            gap: 48px; 
+            position: relative; 
+            z-index: 1; 
+            padding-top: var(--navbar-height); /* Dynamic padding */
+            padding-bottom: 40px;
+            width: 100%;
+        }
         .hero-text { text-align: center; }
         .hero-headline { margin-bottom: 16px; color: var(--color-primary); }
         .hero-subheadline { font-size: 1.125rem; color: var(--color-text-light); max-width: 600px; margin: 0 auto 32px; }
         .hero-buttons { display: flex; flex-direction: column; gap: 16px; justify-content: center; }
         .hero-image { max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         @media (min-width: 768px) {
-            .hero-content { flex-direction: row; text-align: left; }
+            .hero-content { flex-direction: row; text-align: left; padding-top: 40px; }
             .hero-text { text-align: left; flex: 1; }
             .hero-buttons { flex-direction: row; }
             .hero-image { flex: 1; max-width: 50%; }
@@ -208,7 +220,7 @@
 <body>
 
     <!-- 0. Navigation Bar -->
-    <header class="navbar">
+    <header id="navbar" class="navbar">
         <div class="container navbar-content">
             <a href="#" class="nav-logo">Patinha Saudável</a>
             <nav class="nav-links">
@@ -404,7 +416,7 @@
                 </div>
                 <div class="final-cta-image-container">
                     <!-- A small app mockup showing a vet tech using a mobile device with vet app on screen -->
-                    <img src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-qLz94yS233oT7B2sT8Kj7X3X/user-1yL7o8R6m3U7d5k4s5f6j8y8/img-q1w2e3r4t5y6u7i8o9p0-2025-09-19_15_55_05.png" alt="Small app mockup on a mobile phone" class="final-cta-image">
+                    <img src="https://raw.githubusercontent.com/jcfgodinho/patinha-saudavel/8c8b5487f0e1d577b4bdd7576c48a909a1b24188/Patinha%202.jpeg" alt="Small app mockup on a mobile phone" class="final-cta-image">
                 </div>
             </div>
         </section>
@@ -424,11 +436,33 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const navbar = document.getElementById('navbar');
+            const hero = document.querySelector('.hero');
+
+            const adjustHeroHeight = () => {
+                if (navbar && hero) {
+                    const navbarHeight = navbar.offsetHeight;
+                    hero.style.minHeight = `calc(100vh - ${navbarHeight}px)`;
+                }
+            };
+            
+            window.addEventListener('resize', adjustHeroHeight);
+            adjustHeroHeight();
+
             // Smooth Scroll for Navigation
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const navbarHeight = navbar.offsetHeight;
+                        const targetPosition = targetElement.offsetTop - navbarHeight;
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
                 });
             });
 
