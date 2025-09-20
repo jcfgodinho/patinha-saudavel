@@ -111,7 +111,7 @@
         .hero-buttons { display: flex; flex-direction: column; gap: 16px; justify-content: center; }
         .hero-image { max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         @media (min-width: 768px) {
-            .hero-content { flex-direction: row; text-align: left; padding-top: 0; }
+            .hero-content { flex-direction: row; text-align: left; padding-top: 0; justify-content: space-between; }
             .hero-text { 
                 text-align: left; 
                 flex: 1;
@@ -122,7 +122,7 @@
                 align-items: flex-start;
             }
             .hero-buttons { flex-direction: row; }
-            .hero-image { flex: 1; max-width: 50%; }
+            .hero-image-container { flex: 1; max-width: 50%; display: block; }
         }
         
         /* --- "O Problema" Section --- */
@@ -265,7 +265,7 @@
         <section class="hero">
             <div class="container hero-content">
                 <div class="hero-text hero-animation">
-                    <h1 class="hero-headline">Fature em 3 dias o que sua clínica costuma faturar em 1 mês</h1>
+                    <h1 class="hero-headline">Fature em 3 dias o que sua clínica custuma faturar em 1 mês</h1>
                     <p class="hero-subheadline">
                         A Campanha Patinha Saudável é um evento presencial de vacinação e prevenção, feito sob medida para clínicas veterinárias que querem aumentar faturamento, atrair tutores e fidelizar pacientes — sem complicação.
                     </p>
@@ -275,8 +275,7 @@
                     </div>
                 </div>
                 <div class="hero-image-container hero-animation" style="animation-delay: 0.2s;">
-                    <!-- A clean, professional hero shot of a veterinarian with a dog -->
-                    <img src="https://raw.githubusercontent.com/jcfgodinho/patinha-saudavel/89eab0e48b434d149299b46b3b3f2c7d8b4f9119/Patinha%201.jpeg" alt="Patinha Saudável Hero" class="hero-image">
+                    <img src="https://raw.githubusercontent.com/jcfgodinho/patinha-saudavel/e0366fabc6b2c030ae48f70b4b68c2fc512f19a0/Patinha%201.jpeg" alt="Patinha Saudável Hero" class="hero-image">
                 </div>
             </div>
         </section>
@@ -462,15 +461,16 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const navbar = document.getElementById('navbar');
+            const hero = document.querySelector('.hero');
             const heroContent = document.querySelector('.hero-content');
 
-            const adjustHeroPadding = () => {
+            const adjustHeroHeight = () => {
                 const navbarHeight = navbar.offsetHeight;
                 heroContent.style.paddingTop = `${navbarHeight}px`;
             };
 
-            adjustHeroPadding();
-            window.addEventListener('resize', adjustHeroPadding);
+            adjustHeroHeight();
+            window.addEventListener('resize', adjustHeroHeight);
 
             // Smooth Scroll for Navigation
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
