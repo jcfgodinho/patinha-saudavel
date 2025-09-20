@@ -175,39 +175,29 @@
         /* --- Testimonials Section (New Layout) --- */
         .testimonials-layout { 
             display: flex;
-            flex-direction: column;
+            flex-wrap: wrap; /* Allow images to wrap on smaller screens */
+            justify-content: center;
             align-items: center;
-            gap: 48px;
-            text-align: center;
-        }
-        .testimonial-content {
-            max-width: 600px;
+            gap: 24px;
+            padding: 16px 0;
         }
         .testimonial-image {
             max-width: 100%;
             height: auto;
             border-radius: 12px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            flex: 1 1 300px; /* Make images flexible and responsive */
         }
-        .testimonial-rating { color: #facc15; font-size: 1.25rem; margin-bottom: 8px; }
-        .testimonial-text { font-style: italic; color: var(--color-text); margin-bottom: 16px; }
-        .testimonial-author { font-weight: 600; }
-        .testimonial-author span { font-weight: 400; font-size: 0.875rem; color: var(--color-text-light); display: block; }
+        .testimonial-image-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+        }
         @media (min-width: 768px) {
             .testimonials-layout {
                 flex-direction: row;
-                text-align: left;
-                align-items: flex-start;
-                justify-content: center;
-            }
-            .testimonial-content {
-                flex: 1;
-                max-width: 50%;
-                padding-right: 48px;
-            }
-            .testimonial-image-container {
-                flex: 1;
-                max-width: 50%;
+                justify-content: space-around;
+                align-items: center;
             }
         }
 
@@ -265,7 +255,7 @@
         <section class="hero">
             <div class="container hero-content">
                 <div class="hero-text hero-animation">
-                    <h1 class="hero-headline">Fature em 3 dias o que sua clínica custuma faturar em 1 mês</h1>
+                    <h1 class="hero-headline">Fature em 3 dias o que sua clínica costuma faturar em 1 mês</h1>
                     <p class="hero-subheadline">
                         A Campanha Patinha Saudável é um evento presencial de vacinação e prevenção, feito sob medida para clínicas veterinárias que querem aumentar faturamento, atrair tutores e fidelizar pacientes — sem complicação.
                     </p>
@@ -275,6 +265,7 @@
                     </div>
                 </div>
                 <div class="hero-image-container hero-animation" style="animation-delay: 0.2s;">
+                    <!-- A clean, professional hero shot of a veterinarian with a dog -->
                     <img src="https://raw.githubusercontent.com/jcfgodinho/patinha-saudavel/e0366fabc6b2c030ae48f70b4b68c2fc512f19a0/Patinha%201.jpeg" alt="Patinha Saudável Hero" class="hero-image">
                 </div>
             </div>
@@ -374,13 +365,9 @@
         <section class="container section-padding">
             <h2 class="fade-in">Nossas Clínicas Parceiras</h2>
             <div class="testimonials-layout fade-in">
-                <div class="testimonial-content">
-                    <div class="testimonial-rating">★★★★★</div>
-                    <p class="testimonial-text">"A Campanha Patinha Saudável superou todas as nossas expectativas. Conseguimos atrair muitos clientes novos e a equipe se sentiu muito mais motivada e organizada. Os resultados financeiros foram impressionantes!"</p>
-                </div>
-                <div class="testimonial-image-container">
-                    <!-- Image of a smiling veterinarian with a pet owner to illustrate social proof -->
-                    <img src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-qLz94yS233oT7B2sT8Kj7X3X/user-1yL7o8R6m3U7d5k4s5f6j8y8/img-y9L8g2W6j7h5x3c4v5p6t8r7-2025-09-19_15_55_05.png" alt="Veterinarian speaking with a pet owner" class="testimonial-image">
+                <div class="testimonial-images-container" style="display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;">
+                    <img src="https://raw.githubusercontent.com/jcfgodinho/patinha-saudavel/8cc4c8cbab2669c6093fe51f29e18d095debcf54/depoimento%201.png" alt="Depoimento de cliente 1" class="testimonial-image" style="max-width: 48%; height: auto; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+                    <img src="https://raw.githubusercontent.com/jcfgodinho/patinha-saudavel/40e24428cd7b30757c78215f78f66d218a15ee8b/depoimento%202.png" alt="Depoimento de cliente 2" class="testimonial-image" style="max-width: 48%; height: auto; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
                 </div>
             </div>
         </section>
@@ -461,16 +448,27 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const navbar = document.getElementById('navbar');
-            const hero = document.querySelector('.hero');
             const heroContent = document.querySelector('.hero-content');
+            const heroImageContainer = document.querySelector('.hero-image-container');
+            const heroText = document.querySelector('.hero-text');
 
-            const adjustHeroHeight = () => {
+            const adjustHeroLayout = () => {
                 const navbarHeight = navbar.offsetHeight;
+                const windowWidth = window.innerWidth;
+
                 heroContent.style.paddingTop = `${navbarHeight}px`;
+
+                if (windowWidth < 768) {
+                    heroImageContainer.style.display = 'block';
+                    heroText.style.alignItems = 'center';
+                } else {
+                    heroImageContainer.style.display = 'block';
+                    heroText.style.alignItems = 'flex-start';
+                }
             };
 
-            adjustHeroHeight();
-            window.addEventListener('resize', adjustHeroHeight);
+            adjustHeroLayout();
+            window.addEventListener('resize', adjustHeroLayout);
 
             // Smooth Scroll for Navigation
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -479,7 +477,7 @@
                     const targetId = this.getAttribute('href');
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        const navbarHeight = document.getElementById('navbar').offsetHeight;
+                        const navbarHeight = navbar.offsetHeight;
                         const targetPosition = targetElement.offsetTop - navbarHeight;
                         window.scrollTo({
                             top: targetPosition,
