@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-primary: #1e3a8a; /* Dark Blue */
+            --color-primary: #223d8c; /* Dark Blue */
             --color-primary-light: #2563eb; /* Cobalt Blue */
             --color-accent: #3b82f6; /* Lighter Blue */
             --color-text: #1f2937; /* Dark Gray */
@@ -18,7 +18,6 @@
             --color-bg-white: #ffffff; /* White */
             --color-bg-blue-light: #e6f0ff; /* New light blue background */
             --font-main: 'Poppins', sans-serif;
-            --navbar-height: 80px; /* Default value, will be updated by JS */
         }
 
         body {
@@ -31,6 +30,7 @@
             -moz-osx-font-smoothing: grayscale;
             line-height: 1.6;
             overflow-x: hidden;
+            padding-top: 80px; /* Added padding to prevent content from being hidden by the fixed navbar */
         }
 
         /* --- Animations & Utilities --- */
@@ -72,9 +72,12 @@
             background: linear-gradient(135deg, rgba(235, 245, 255, 0.8), rgba(255, 255, 255, 0.6));
             background-size: 200% 200%;
             animation: gradient-move 20s ease infinite;
-            min-height: 100vh;
+            min-height: calc(100vh - 80px); /* Adjusting for the navbar height */
             display: flex;
             align-items: center;
+            justify-content: center; /* Center content vertically and horizontally */
+            padding-top: 0;
+            padding-bottom: 0;
         }
         .hero-content { 
             display: flex; 
@@ -83,8 +86,6 @@
             gap: 48px; 
             position: relative; 
             z-index: 1; 
-            padding-top: var(--navbar-height); /* Dynamic padding */
-            padding-bottom: 40px;
             width: 100%;
         }
         .hero-text { text-align: center; }
@@ -93,7 +94,7 @@
         .hero-buttons { display: flex; flex-direction: column; gap: 16px; justify-content: center; }
         .hero-image { max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         @media (min-width: 768px) {
-            .hero-content { flex-direction: row; text-align: left; padding-top: 40px; }
+            .hero-content { flex-direction: row; text-align: left; }
             .hero-text { text-align: left; flex: 1; }
             .hero-buttons { flex-direction: row; }
             .hero-image { flex: 1; max-width: 50%; }
@@ -436,19 +437,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const navbar = document.getElementById('navbar');
-            const hero = document.querySelector('.hero');
-
-            const adjustHeroHeight = () => {
-                if (navbar && hero) {
-                    const navbarHeight = navbar.offsetHeight;
-                    hero.style.minHeight = `calc(100vh - ${navbarHeight}px)`;
-                }
-            };
-            
-            window.addEventListener('resize', adjustHeroHeight);
-            adjustHeroHeight();
-
             // Smooth Scroll for Navigation
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
@@ -456,7 +444,7 @@
                     const targetId = this.getAttribute('href');
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        const navbarHeight = navbar.offsetHeight;
+                        const navbarHeight = document.getElementById('navbar').offsetHeight;
                         const targetPosition = targetElement.offsetTop - navbarHeight;
                         window.scrollTo({
                             top: targetPosition,
