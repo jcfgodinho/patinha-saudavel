@@ -63,7 +63,6 @@
             z-index: 1000; 
             background-color: rgba(255, 255, 255, 0.9); 
             backdrop-filter: blur(10px); 
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); 
             transition: transform 0.3s ease-in-out; 
             height: var(--navbar-height);
         }
@@ -131,7 +130,7 @@
         .problem-section p { font-size: 1.125rem; margin-bottom: 12px; }
         .problem-section .highlight { font-weight: 700; color: var(--color-primary-light); }
         
-        /* --- "A Solução" Section --- */
+        /* --- "A Solução" / "O Método" Section --- */
         .solution-section { text-align: center; max-width: 800px; margin: 0 auto; }
         .solution-section h2 { color: var(--color-primary); }
         .solution-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
@@ -145,26 +144,59 @@
             transition: transform 0.2s, box-shadow 0.2s;
         }
         .solution-card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+        .solution-card h3 { font-size: 1.25rem; color: var(--color-primary); margin-bottom: 8px; }
+        .solution-card p { font-size: 1rem; color: var(--color-text-light); }
         .solution-card .check { color: #22c55e; margin-right: 8px; }
         @media (min-width: 640px) {
             .solution-grid { grid-template-columns: repeat(2, 1fr); }
         }
         @media (min-width: 1024px) {
-            .solution-grid { grid-template-columns: repeat(3, 1fr); }
+            .solution-grid { 
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: auto;
+                gap: 24px;
+            }
+            /* Making the fourth card span two rows on desktop to balance the 4 cards */
+            .solution-card:nth-child(4) {
+                grid-row: span 2;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+        }
+        /* Mobile layout for 4 cards */
+        @media (max-width: 1023px) {
+            .solution-card:nth-child(4) {
+                grid-row: auto;
+            }
         }
 
         /* --- Features Section (Cards) --- */
-        .features-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
-        .feature-main { padding: 48px; background-color: var(--color-bg-light); border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .features-grid { 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 24px; 
+        }
+        /* The main card will span across all columns for consistency in the previous steps */
+        .feature-main { 
+            padding: 48px; 
+            background-color: var(--color-bg-light); 
+            border-radius: 12px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
+            grid-column: 1 / -1; 
+        }
         .feature-card { padding: 24px; background-color: var(--color-bg-white); border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #e5e7eb; transition: transform 0.2s, box-shadow 0.2s; }
         .feature-card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
         .feature-card h3 { font-size: 1.25rem; color: var(--color-primary); }
         @media (min-width: 768px) {
-            .features-grid { grid-template-columns: 1fr 1fr; }
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            /* Adjusting remaining cards for the new layout (keeping previous grid structure where applicable) */
+            .feature-card { grid-column: auto; }
         }
         @media (min-width: 1024px) {
             .features-grid { grid-template-columns: 1fr 1fr 1fr; }
         }
+
 
         /* --- "Why Choose" Section (Pillars) --- */
         .pillars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 48px; }
@@ -229,8 +261,11 @@
         .final-cta-text h2 { color: var(--color-primary); margin-bottom: 24px; }
         .final-cta-image { max-width: 250px; }
         @media (min-width: 768px) {
-            .final-cta-content { flex-direction: row; text-align: left; }
+            .final-cta-content { flex-direction: row; text-align: left; justify-content: space-between; }
             .final-cta-text { flex: 1; }
+            /* Making the final CTA image the same width as the hero image (50% of the container) */
+            .final-cta-image-container { flex: 1; max-width: 50%; display: block; }
+            .final-cta-image-container img { max-width: 100%; height: auto; }
         }
 
         /* --- Footer --- */
@@ -244,12 +279,10 @@
     <!-- 0. Navigation Bar -->
     <header id="navbar" class="navbar">
         <div class="container navbar-content">
-            <a href="#" class="nav-logo">
-                Patinha Saudável
-            </a>
+            <a href="#" class="nav-logo">Patinha Saudável</a>
             <nav class="nav-links">
                 <a href="#o-problema" class="nav-link">O Problema</a>
-                <a href="#a-solucao" class="nav-link">A Solução</a>
+                <a href="#o-metodo" class="nav-link">O Método</a>
                 <a href="#o-que-voce-recebe" class="nav-link">O Que Você Recebe</a>
                 <a href="#resultados-esperados" class="nav-link">Resultados Esperados</a>
                 <a href="#oferta-especial" class="nav-link">Oferta Especial</a>
@@ -263,7 +296,7 @@
         <section class="hero">
             <div class="container hero-content">
                 <div class="hero-text hero-animation">
-                    <h1 class="hero-headline">Fature em 3 dias o que sua clínica costuma faturar em 1 mês</h1>
+                    <h1 class="hero-headline">Faço clínicas veterinárias aumentarem o faturamento com o método Patinha Saudável</h1>
                     <p class="hero-subheadline">
                         A Campanha Patinha Saudável é um evento presencial de vacinação e prevenção, feito sob medida para clínicas veterinárias que querem aumentar faturamento, atrair tutores e fidelizar pacientes — sem complicação.
                     </p>
@@ -288,25 +321,26 @@
             <p class="highlight">👉 Se respondeu “sim” para alguma dessas perguntas, a Campanha Patinha Saudável é para você.</p>
         </section>
 
-        <!-- NEW SECTION - A Solução -->
-        <section id="a-solucao" class="container section-padding fade-in solution-section">
-            <h2>A Solução</h2>
-            <p class="mb-4">Um evento presencial planejado, estruturado e executado em sua clínica, que gera caixa imediato e previsibilidade de faturamento.</p>
+        <!-- NEW SECTION - A Solução (O MÉTODO) -->
+        <section id="o-metodo" class="container section-padding fade-in solution-section">
+            <h2>O Método</h2>
+            <p class="mb-4">**De clínica comum para clínica lucrativa com os 4 Pilares do Método Patinha Saudável**</p>
             <div class="solution-grid">
                 <div class="solution-card">
-                    <p><span class="check">✅</span> Faturamento equivalente a 1 mês em apenas 3 dias</p>
+                    <h3>Diagnóstico e Planejamento</h3>
+                    <p>Anamnese da Clínica e planejamento para aumentar o faturamento e a previsibilidade. Suporte para Análise SWOT da Clínica: diagnóstico detalhado dos pontos fortes, fracos, oportunidades e ameaças para orientar as ações estratégicas.</p>
                 </div>
                 <div class="solution-card">
-                    <p><span class="check">✅</span> Campanha dentro das normas do CFMV</p>
+                    <h3>Posicionamento da marca</h3>
+                    <p>Melhorar o posicionamento da clínica para alcançar as primeiras posições na pesquisa do Google Maps. Obter maior engajamento e reconhecimento para aumentar autoridade no Instagram.</p>
                 </div>
                 <div class="solution-card">
-                    <p><span class="check">✅</span> Divulgação profissional com templates prontos</p>
+                    <h3>Campanhas Sazonais</h3>
+                    <p>Campanhas presenciais com tutores para aumentar a fidelidade e ter previsibilidade de faturamento.</p>
                 </div>
                 <div class="solution-card">
-                    <p><span class="check">✅</span> Roteiros de comunicação que conectam com os tutores</p>
-                </div>
-                <div class="solution-card">
-                    <p><span class="check">✅</span> Equipe engajada e treinada para vender mais</p>
+                    <h3>Relacionamento Lucrativo</h3>
+                    <p>Treinamento da equipe, reativação da base de tutores, atração de novos clientes, melhorar a satisfação dos clientes. para aumento de faturamento.</p>
                 </div>
             </div>
         </section>
@@ -336,7 +370,7 @@
                     <p>Apoio contínuo e em tempo real para tirar dúvidas e resolver qualquer questão que surja durante o processo.</p>
                 </div>
                 <div class="feature-card fade-in">
-                    <h3>Reuniões semanais até o evento</h3>
+                    <h3>Reuniões mensais</h3>
                     <p>Encontros para monitorar o progresso, ajustar a estratégia e garantir que a campanha esteja no caminho certo para o sucesso.</p>
                 </div>
                 <div class="feature-card fade-in">
